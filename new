@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'COURSE_NAME', defaultValue: 'World', description: 'Name of the course to greet')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Greeting') {
+            steps {
+                sh "echo 'Hello ${params.COURSE_NAME}!'"
+            }
+        }
+    }
+}
